@@ -6,6 +6,7 @@ const DB_DATABASE: string = 'f1-result';
 const SWAGGER_URL: string = 'docs';
 
 
+
 export {
     DB_HOST,
     DB_DATABASE,

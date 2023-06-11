@@ -1,12 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsNumber, IsNumberString, IsString, } from 'class-validator';
 
 export class ResultDTO {
-    @ApiProperty()
+    @ApiProperty({ required: false })
+    @IsNumber()
     year: number;
-  
-    @ApiProperty()
+
+    @ApiProperty({ required: false })
+    @IsString()
     winner: string;
-  
-    @ApiProperty()
+
+    @ApiProperty({ required: false })
+    @IsString()
     grandPrix: string;
 }

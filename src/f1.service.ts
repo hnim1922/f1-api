@@ -12,29 +12,65 @@ export class F1Service {
     @InjectRepository(ResultEntity)
     private resultRepository: Repository<ResultEntity>,
   ) { }
+
+
   async fetchAndSaveResults(): Promise<any> {
     try {
-      const response = await axios.get('https://www.formula1.com/results.html');
-      const results = this.parseResults(response.data);
-      results.forEach(async e => {
-        console.log(moment(e.date, "DD MMM YYYY").toDate());
+      const startYear = 1950;
+      const currentYear = new Date().getFullYear();
+      const promises = [];
 
-        await this.resultRepository.save({
-          grandPrix: e.grandPrix,
-          date: moment(e.date, "DD MMM YYYY").toDate(),
-          car: e.car,
-          laps: parseInt(e.laps),
-          time: e.time,
-          winner: e.winner
-        })
-      })
-      return results
+      for (let year = startYear; year <= currentYear; year++) {
+        const response = axios.get(`https://www.formula1.com/en/results.html/${year}/races.html`);
+        promises.push(response);
+      }
+
+      const responses = await Promise.all(promises);
+      const results = [];
+
+      for (const response of responses) {
+        const parsedResults = this.parseResults(response.data);
+        const savePromises = [];
+
+        for (const e of parsedResults) {
+          const laps = Number.isNaN(parseInt(e.laps)) ? 0 : parseInt(e.laps);
+
+          const savePromise = this.resultRepository.save({
+            grandPrix: e.grandPrix,
+            date: moment(e.date, "DD MMM YYYY").toDate(),
+            car: e.car,
+            laps: laps,
+            time: e.time,
+            winner: e.winner
+          });
+
+          savePromises.push(savePromise);
+        }
+
+        await Promise.all(savePromises);
+        results.push(...parsedResults);
+      }
+
+      return results;
     } catch (error) {
       console.error('Error fetching and saving results:', error);
       throw error;
     }
   }
 
+
+
+  async getResultList(dto: ResultDTO): Promise<ResultEntity[]> {
+    const queryBuilder = this.resultRepository
+      .createQueryBuilder('result')
+    if (dto.grandPrix) queryBuilder.where('LOWER(result.grand_prix) like :grandPrix', { grandPrix: `%${dto.grandPrix}%` })
+
+    if (dto.winner) queryBuilder.andWhere('LOWER(result.winner) like :winner', { winner: `%${dto.grandPrix}%` })
+
+    if (dto.year) queryBuilder.andWhere('YEAR(result.date) = :year', { year: dto.year, })
+
+    return queryBuilder.getMany();
+  }
   private parseResults(html: string): any[] {
     const results: any[] = [];
 
@@ -50,7 +86,7 @@ export class F1Service {
 
       const grandPrix = $(columns[1]).find('a').text().trim();
       const date = $(columns[2]).text().trim();
-      const winner = $(columns[3]).find('span').text().trim();
+      const winner = $(columns[3]).find('span.hide-for-tablet, span.hide-for-mobile').map((index, element) => $(element).text().trim()).get().join(' ');
       const car = $(columns[4]).text().trim();
       const laps = $(columns[5]).text().trim();
       const time = $(columns[6]).text().trim();
