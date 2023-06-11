@@ -35,7 +35,7 @@ This is a TypeScript script that scrapes Formula 1 race results from the formula
 1. Clone the repository:
 
    ```shell
-   git clone hnim1922/f1-api
+   git clone https://github.com/hnim1922/f1-api.git
    ```
  2. Navigate to the project directory:
   ```
