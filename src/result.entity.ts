@@ -16,9 +16,9 @@ export class ResultEntity {
     @Column({ name: "car" })
     public car: string;
 
-    @Column({ name: "laps" })
+    @Column({ name: "laps", nullable: true })
     public laps: number;
 
-    @Column({ name: "time", type: 'time' })
+    @Column({ name: "time", type: 'time', nullable: true })
     public time: string;
 }
