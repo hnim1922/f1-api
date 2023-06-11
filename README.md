@@ -45,37 +45,29 @@ This is a TypeScript script that scrapes Formula 1 race results from the formula
  ```
  yarn add
  ```
- 4. Configure the MySQL database connection:
- Open the index.ts file in the environment folder.
+ 4. Configure the MySQL database connection:<br>
+ Open the index.ts file in the environment folder.<br>
  Modify the DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD, and DB_DATABASE fields according to your MySQL database configuration.
-## Running the app
-
-```bash
-# development
-$ yarn run start
-
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
-```
 ## Usage
-1. Go to url:localhost/3001/docs
-2. Make a GET request to the API endpoint:
+1. Run the application:
+```bash
+$ yarn run start
+```
+2. Go to url:localhost/3001/docs
+3. Make a GET request to the API endpoint:
 ```
 GET http://localhost:3001/results
 ```
 This will fetch the race results from the formula1.com website, parse them, and save them into the MySQL database.
 
-3. Check the database:
+4. Check the database:
 
 You can now check the MySQL database to verify that the race results have been saved successfully.
 
-4. Make a GET request to the API endpoint:
+5. Make a GET request to the API endpoint:
 ```
 GET http://localhost:3001/db-results
 ```
-Input conditions such as winner'name, year, grand prix, car
+Input conditions such as winner'name, year, grand prix, car<br>
 This will show the race results from that are saved in the database with some conditions input from user
 
