@@ -26,12 +26,28 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+# Formula 1 Race Results Scraper
+
+This is a TypeScript script that scrapes Formula 1 race results from the formula1.com website and saves them into a MySQL database. It uses the NestJS framework and TypeORM library for building the REST API and interacting with the database.
+
 ## Installation
 
-```bash
-$ yarn install
-```
+1. Clone the repository:
 
+   ```shell
+   git clone <hnim1922/f1-api>
+   ```
+ 2. Navigate to the project directory:
+  ```
+  cd f1-api
+  ```
+ 3. Install the dependencies:
+ ```
+ yarn add
+ ```
+ 4. Configure the MySQL database connection:
+ Open the index.ts file in the environment folder.
+ Modify the DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD, and DB_DATABASE fields according to your MySQL database configuration.
 ## Running the app
 
 ```bash
@@ -44,30 +60,22 @@ $ yarn run start:dev
 # production mode
 $ yarn run start:prod
 ```
-
-## Test
-
-```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
+## Usage
+1. Go to url:localhost/3001/docs
+2. Make a GET request to the API endpoint:
 ```
+GET http://localhost:3001/results
+```
+This will fetch the race results from the formula1.com website, parse them, and save them into the MySQL database.
 
-## Support
+3. Check the database:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+You can now check the MySQL database to verify that the race results have been saved successfully.
 
-## Stay in touch
+4. Make a GET request to the API endpoint:
+```
+GET http://localhost:3001/db-results
+```
+Input conditions such as winner'name, year, grand prix, car
+This will show the race results from that are saved in the database with some conditions input from user
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
