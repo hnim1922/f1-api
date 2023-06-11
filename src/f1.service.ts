@@ -65,9 +65,11 @@ export class F1Service {
       .createQueryBuilder('result')
     if (dto.grandPrix) queryBuilder.where('LOWER(result.grand_prix) like :grandPrix', { grandPrix: `%${dto.grandPrix}%` })
 
-    if (dto.winner) queryBuilder.andWhere('LOWER(result.winner) like :winner', { winner: `%${dto.grandPrix}%` })
+    if (dto.winner) queryBuilder.andWhere('LOWER(result.winner) like :winner', { winner: `%${dto.winner}%` })
 
     if (dto.year) queryBuilder.andWhere('YEAR(result.date) = :year', { year: dto.year, })
+
+    if (dto.car) queryBuilder.andWhere('LOWER(result.car) like :car', { car: `%${dto.car}%` })
 
     return queryBuilder.getMany();
   }

@@ -13,4 +13,8 @@ export class ResultDTO {
     @ApiProperty({ required: false })
     @IsString()
     grandPrix: string;
+
+    @ApiProperty({ required: false })
+    @IsString()
+    car: string;
 }
