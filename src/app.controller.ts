@@ -12,7 +12,7 @@ export class AppController {
     return this.appService.fetchAndSaveResults();
   }
 
-  @Get('/results')
+  @Get('/db-results')
   async searchResult(@Query() dto: ResultDTO): Promise<ResultEntity[]> {
     return this.appService.getResultList(dto)
   }
