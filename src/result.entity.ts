@@ -1,7 +1,9 @@
-import { Entity, Column } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('result')
 export class ResultEntity {
+    @PrimaryGeneratedColumn()
+    public id: number
     @Column({ name: 'grand_prix' })
     public grandPrix: string;
 
