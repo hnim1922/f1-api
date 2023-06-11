@@ -1,12 +1,12 @@
 import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { F1Service } from './f1.service';
 
-@Controller()
+@Controller('api/results')
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly appService: F1Service) { }
 
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  async fetchAndSaveResults(): Promise<any> {
+    return this.appService.fetchAndSaveResults();
   }
 }
